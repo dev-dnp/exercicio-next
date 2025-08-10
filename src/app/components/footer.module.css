@@ -1,0 +1,8 @@
+.textFooter 
+{
+    font-size: 14px;
+    height: 80px;
+    display: grid;
+    place-items: center;
+    text-align: center;
+}

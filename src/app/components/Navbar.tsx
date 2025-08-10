@@ -1,0 +1,41 @@
+"use client";
+
+import clsx from "clsx";
+import style from "./navbar.module.css";
+import Link from "next/link";
+import { useUserContext } from "@/context/UserContext";
+
+
+export default function NavBar(){
+
+    const {user} = useUserContext();
+
+    return (
+        <>
+            <header className={style.header}>
+                <div className={clsx("container", style.myContainer)}>
+                    <div className="logo">LOGO</div>
+
+                    <div className={style.boxMenu}>
+                        <nav className={style.menu}>
+                            <ul>
+                                <li>
+                                    <Link href="/dashboard">Home</Link>
+                                </li>
+
+                                <li>
+                                    <Link href="/dashboard/produtos">Produtos</Link>
+                                </li>
+                            </ul>
+                        </nav>
+
+                        <div className={style.menu}>
+                            <a href="" className={style.username}>Olá, {user?.firstName}</a> | 
+                            <a href="" className={style.linkLogout}> Sair</a>
+                        </div>
+                    </div>
+                </div>
+           </header>
+        </>
+    );
+}

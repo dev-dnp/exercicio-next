@@ -1,0 +1,32 @@
+.header .myContainer
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 3rem;
+    border-bottom: 1px solid #000;
+    margin-bottom: 2rem;
+}
+
+.boxMenu 
+{
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.menu ul 
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.menu a {
+    color: #5628b3;
+}
+
+.linkLogout {
+    color: red !important;
+}

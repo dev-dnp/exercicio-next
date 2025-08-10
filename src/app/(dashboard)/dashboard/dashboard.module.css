@@ -1,0 +1,18 @@
+.hello 
+{
+    font-size: 5rem;
+    text-align: center;
+}
+
+.name 
+{
+    font-size: 5rem;
+    text-decoration: underline;
+}
+
+.home 
+{
+    height: 400px;
+    display: grid;
+    place-items: center;
+}

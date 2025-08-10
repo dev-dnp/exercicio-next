@@ -20,6 +20,7 @@ export default function Login(){
     const [loadingLogin, setLoadingLogin] = useState(false);
     const router = useRouter();
     const [isClient, setIsClient] = useState(false);
+    const [erro, setErro] = useState("");
 
     const onSubmitLogin = async (data: FormData) => {
 
@@ -32,12 +33,14 @@ export default function Login(){
                 data
             });
 
+            setErro("")
+
             if (authUser.data.token) {
                 window.location.href = "/dashboard";
             }
             
         } catch(error) {
-            // console.log(error)
+            setErro("Usuario ou senha incorreta! Tente novamente")
             
         } finally   {
             setLoadingLogin(false);
@@ -67,10 +70,11 @@ export default function Login(){
 
     return(
         <div className={style.boxForm}>
-
-            
-            
+ 
             <form onSubmit={handleSubmit(onSubmitLogin)} className={style.form}>
+
+                {erro}
+
                 <div className={style.boxInput}>
                     <label htmlFor="">Usuário </label>
                     <input {...register("username", {required: true})} type="text" placeholder="Seu usuario"/>

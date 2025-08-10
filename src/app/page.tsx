@@ -7,5 +7,5 @@ export default function Home() {
 
   window.location.href = "/login";
 
-  return "";
+  return "Redirecionando você para o login...";
 }

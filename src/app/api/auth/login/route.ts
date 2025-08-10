@@ -19,8 +19,8 @@ export async function POST(request: Request){
 
     try {
         const {data} = await api.post<IGetLoginUser>("/auth/login", {
-        username,
-        password,
+        username: username.trim(),
+        password: password.trim(),
         expiresInMins: 5
         },
         {

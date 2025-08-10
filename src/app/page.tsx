@@ -5,11 +5,7 @@ import { useUserContext } from "@/context/UserContext";
 
 export default function Home() {
 
-  const {user} =useUserContext()
+  window.location.href = "/login";
 
-  console.log(user)
-
-  return (
-    <h1>Hello {user?.lastName}</h1>
-  );
+  return "";
 }

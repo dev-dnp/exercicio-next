@@ -31,7 +31,7 @@ export default function NavBar(){
 
                         <div className={style.menu}>
                             <a href="" className={style.username}>Olá, {user?.firstName}</a> | 
-                            <a href="" className={style.linkLogout}> Sair</a>
+                            <a href="#" className={style.linkLogout}> Sair</a>
                         </div>
                     </div>
                 </div>

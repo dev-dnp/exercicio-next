@@ -1,18 +1,6 @@
 
-import { jwtDecode } from "jwt-decode";
 import { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-
-type PayloadUser = {
-    id: string | number;
-    username:string
-    email:string
-    firstName:string
-    lastName:string
-    gender:string
-    image:string
-}
-
 
 export function middleware(request: NextRequest){
 
@@ -29,10 +17,6 @@ export function middleware(request: NextRequest){
     if(accessProtected && !token){
         return NextResponse.redirect(urlRedirect);
     } 
-
-    const payload : PayloadUser = jwtDecode(token ?? "");
-
-    console.log(payload.id)
     return NextResponse.next()
 }
 

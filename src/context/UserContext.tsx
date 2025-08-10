@@ -17,14 +17,12 @@ type UserData = {
   image: string
 }
 
-
-
 type UserContextType = {
   user: UserData | null;
   loading: boolean
   setUser: React.Dispatch<React.SetStateAction<UserData | null>>;
+  refetch: () => Promise<void>
 };
-
 
 export const UserContext = createContext<UserContextType | undefined>(undefined);
 
@@ -33,24 +31,36 @@ export const UserProvider = ({children}:PropsProvider) => {
     const [user, setUser] = useState<UserData | null>(null)
     const [loading, setLoading] = useState(true);
 
+    const fetchUser = async () => {
+        try {
+
+          const {data} = await axios.get("/api/auth/user");
+
+          setUser(data.data);
+
+        } catch(e) {
+          console.log(e)
+
+        } finally {
+          setLoading(false);
+        }
+    }
+
     useEffect(() => {
-
-      async function fetchUser(){
-
-        const {data} = await axios.get("/api/auth/user");
-        
-        setUser(data.data);
-        setLoading(false);
-      }
-
       fetchUser();
-
     }, [])
 
+    const valueContext = {
+      user,
+      setUser,
+      loading,
+      refetch: fetchUser
+    }
+
     return (
-        <UserContext.Provider value={{user, setUser, loading}}>
-            {children}
-        </UserContext.Provider>
+      <UserContext.Provider value={valueContext}>
+          {children}
+      </UserContext.Provider>
     )
 
 }

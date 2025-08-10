@@ -16,7 +16,7 @@ export default function Login(){
 
     const {register, handleSubmit, formState: {errors}} = useForm<FormData>();
     
-    const {user} = useUserContext();
+    const {user, setUser} = useUserContext();
     const [loadingLogin, setLoadingLogin] = useState(false);
     const router = useRouter();
     const [isClient, setIsClient] = useState(false);
@@ -33,7 +33,7 @@ export default function Login(){
             });
 
             if (authUser.data.token) {
-                router.push("/dashboard");
+                window.location.href = "/dashboard";
             }
             
         } catch(error) {
@@ -47,11 +47,14 @@ export default function Login(){
 
 
     useEffect(()=> {
+
         setIsClient(true)
 
         async function getUser(){
             if(user?.id){
                 router.push("/dashboard")
+            } else {
+                setUser(null);
             }
         }
 

@@ -12,8 +12,7 @@ export default function Home(){
     return (
         <div>
             <div className={clsx("container", style.home)}>
-
-
+                
                 {loading && <img width={100} src="/loading-gif.gif" />}
 
                 {!loading && (
@@ -24,8 +23,6 @@ export default function Home(){
                         </span>!
                     </h1>
                 )}
-
-                
             
                 <div style={{textAlign: "center"}}>
                     <Link href="/dashboard/produtos">Ver produtos</Link>

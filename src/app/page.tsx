@@ -1,8 +1,12 @@
 "use client"
 
+import { useEffect } from "react";
+
 export default function Home() {
 
-  window.location.href = "/login";
+  useEffect(()=> {
+    window.location.href = "/login";
+  }, [])
 
   return "Redirecionando você para o login...";
 }

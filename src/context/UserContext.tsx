@@ -26,11 +26,7 @@ type UserContextType = {
 };
 
 
-export const UserContext = createContext<UserContextType | undefined>({
-  user: null,
-  loading: true,
-  setUser: () => {},
-});
+export const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider = ({children}:PropsProvider) => {
 

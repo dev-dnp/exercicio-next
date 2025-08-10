@@ -36,15 +36,15 @@ export async function POST(request: Request){
             maxAge: 60 * 5
         })
 
-        return new Response(JSON.stringify({ok: "ok", token: data.accessToken}), 
+        return NextResponse.json({msg: "ok", token: data.accessToken}, 
         {
             status: 200,
             headers: {"Content-Type": "application/json"}
         })
 
     } catch (e){
-        console.log(e);
-        return NextResponse.json(JSON.stringify({ok: null}));
+
+        return NextResponse.json({msg: "error"}, {status: 401});
     }
 
 }

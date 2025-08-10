@@ -18,9 +18,9 @@ export default function Home(){
 
                 {!loading && (
                     <h1 className={style.hello}>
-                        Olá 
+                        Olá {" "}
                         <span className={style.name}>
-                           {" "} {user?.firstName} {user?.lastName}
+                            {user?.firstName} {user?.lastName}
                         </span>!
                     </h1>
                 )}

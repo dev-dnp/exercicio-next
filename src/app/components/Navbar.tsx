@@ -4,11 +4,24 @@ import clsx from "clsx";
 import style from "./navbar.module.css";
 import Link from "next/link";
 import { useUserContext } from "@/context/UserContext";
+import axios from "axios";
 
 
 export default function NavBar(){
 
     const {user} = useUserContext();
+
+    const fetchLogout = async () => {
+        try {
+
+            await axios.post("/api/auth/logout");
+            
+            window.location.href = "/login";
+
+        } catch(e) {
+            console.log(e)
+        }
+    }
 
     return (
         <>
@@ -31,7 +44,7 @@ export default function NavBar(){
 
                         <div className={style.menu}>
                             <a href="" className={style.username}>Olá, {user?.firstName}</a> | 
-                            <a href="#" className={style.linkLogout}> Sair</a>
+                            <button onClick={fetchLogout} className={style.linkLogout}> Sair</button>
                         </div>
                     </div>
                 </div>

@@ -3,11 +3,11 @@
 import axios from "axios";
 import {createContext, ReactNode, useContext, useEffect, useState} from "react";
 
-type PropsProvider = {
+interface PropsProvider {
     children: ReactNode
 }
 
-type UserData = {
+interface UserData {
   id: string | number
   firstName: string
   lastName: string
@@ -17,7 +17,7 @@ type UserData = {
   image: string
 }
 
-type UserContextType = {
+interface UserContextType {
   user: UserData | null;
   loading: boolean
   setUser: React.Dispatch<React.SetStateAction<UserData | null >>;

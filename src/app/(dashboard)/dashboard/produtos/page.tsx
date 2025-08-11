@@ -1,8 +1,8 @@
 
+import { DollarSign } from "lucide-react";
 import { getAllProducts } from "@/lib/api";
 import style from "./page.module.css";
 import Image from "next/image";
-import { DollarSign } from "lucide-react";
 import Link from "next/link";
 
 export default async function PageProdutos(){
@@ -26,7 +26,6 @@ export default async function PageProdutos(){
                                     <li className={style.detailsName}>
                                         {product.title}
                                     </li>
-
 
                                     <li className={style.detailsPrice}>
                                         <DollarSign />

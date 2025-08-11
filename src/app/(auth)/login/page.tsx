@@ -8,24 +8,24 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import LoadingPage from "@/app/components/LoadingPage";
 
-type FormData = {
-    username: string;
+interface IFormData {
+    username: string
     password: string
 };
 
 export default function Login(){
 
-    const {register, handleSubmit} = useForm<FormData>();
+    const {register, handleSubmit} = useForm<IFormData>();
     const {user, loading} = useUserContext();
     const [loadingLogin, setLoadingLogin] = useState(false);
     const [error, setError] = useState("");
 
     const router = useRouter();
 
-    const onSubmitLogin = async (dataForm: FormData) => {
+    const onSubmitLogin = async (dataForm: IFormData) => {
 
-        setLoadingLogin(true)
-        setError("")
+        setLoadingLogin(true);
+        setError("");
         
         try {
             const { data } = await axios.post(
@@ -56,9 +56,8 @@ export default function Login(){
         }
     }, [user, loading, router])
 
-    if(loading){
-        return <LoadingPage>Aguarde uns segundos...</LoadingPage>;
-    }
+    
+    if(loading) return <LoadingPage>Aguarde uns segundos...</LoadingPage>;
 
     return(
         <div className={style.boxForm}>
@@ -71,6 +70,7 @@ export default function Login(){
                     <label htmlFor="">Usuário </label>
                     <input {...register("username", {required: true})} type="text" placeholder="Seu usuario"/>
                 </div>
+
                  <div className={style.boxInput}>
                     <label htmlFor="">Senha </label>
                     <input {...register("password", {required: true})} type="text" placeholder="Sua senha"/>
@@ -79,9 +79,7 @@ export default function Login(){
                 <button disabled={loadingLogin}>Entrar</button>
             </form>
 
-            {loadingLogin && (
-                <LoadingPage>Autenticando...</LoadingPage>
-            )}
+            {loadingLogin && (<LoadingPage>Autenticando...</LoadingPage>)}
             
         </div>
     );

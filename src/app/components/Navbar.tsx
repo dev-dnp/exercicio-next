@@ -43,7 +43,7 @@ export default function NavBar(){
                         </nav>
 
                         <div className={style.menu}>
-                            <a href="" className={style.username}>Olá, {user?.firstName}</a> | 
+                            <span  className={style.username}>Olá, {user?.firstName}</span> | 
                             <button onClick={fetchLogout} className={style.linkLogout}> Sair</button>
                         </div>
                     </div>

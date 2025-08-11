@@ -12,11 +12,11 @@ const styles = {
     },
 }
 
-type Props = {
+interface IProps {
     children: ReactNode
 }
 
-export default function LoadingPage({children}:Props){
+export default function LoadingPage({children}:IProps){
     return (
         <div style={styles.loadingContainer}>
             <div style={{textAlign: "center"}}>

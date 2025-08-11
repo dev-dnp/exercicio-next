@@ -1,5 +1,5 @@
 
-import { getAllProducts, getSingleProducts } from "@/lib/api";
+import { getSingleProducts } from "@/lib/api";
 import style from "./page.module.css";
 import Image from "next/image";
 import { DollarSign } from "lucide-react";
@@ -17,19 +17,20 @@ export default async function PageProdutos({ params }:Props){
 
     const { id } = await params;
 
-    if(isNaN(Number(id))){
-        redirect("/dashboard/produtos");
-    }
+    if(isNaN(Number(id))) return redirect("/dashboard/produtos");
 
     const product = await getSingleProducts(Number(id));
 
     return (
         <div>
            <div className="container">
-                <header><h1 className={style.titleProdutos}>Detalhes do Produto </h1></header>
-
-                <div>
-
+                <header>
+                    <h1 className={style.titleProdutos}> Detalhes do Produto </h1>
+                </header>
+                
+                {!product
+                ? <p style={{textAlign: "center"}}>Produto não encontrado!</p>
+                : (<div>
                     {product.id && (
                         <div className={style.myProduct}>
                             <div className={style.image}>
@@ -62,9 +63,8 @@ export default async function PageProdutos({ params }:Props){
                             </div>
                         </div>
                     )}
-                    
 
-                </div>
+                </div>)}
            </div>
         </div>
     );

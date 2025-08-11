@@ -24,7 +24,11 @@ export async function getAllProducts(){
 
 export async function getSingleProducts(id: number){
 
-    const { data } = await api.get<IProducts>(`/products/${id}`);
- 
-    return data;
+    try{
+        const { data } = await api.get<IProducts>(`/products/${id}`);
+        return data;
+    }
+    catch {
+        return null;
+    }
 }

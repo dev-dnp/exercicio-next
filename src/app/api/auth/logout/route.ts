@@ -1,17 +1,15 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-
-export async function POST(request: NextRequest){
+export async function POST(){
 
     try {
 
-        const response = NextResponse.json(
-            {msg: "Logout executado com sucesso!"},
-            {status: 200}
-        );
+        const res = NextResponse.json({
+            success: true,
+            msg: "Sessão terminada com sucesso!"
+        }, {status: 200})
 
-        response.cookies.set({
-
+        res.cookies.set({
             name: "token",
             value: "",
             httpOnly: true,
@@ -19,17 +17,20 @@ export async function POST(request: NextRequest){
             sameSite: "strict",
             path: "/",
             maxAge: 0
-        
         });
 
-        response.cookies.delete("token");
+        return res;
 
-        return response;
+    } catch(error){
 
-    } catch(e){
+        console.error("A operação falhou: ", error);
 
-        console.log(e);
+        const res = NextResponse.json({
+            success: false,
+            msg: "A operação (terminar sessão) falhou"
+        }, {status: 500})
 
+        return res;
     }
 
 }

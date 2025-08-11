@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import {api} from "@/lib/axios";
-import { cookies } from "next/headers";
+import { api } from "@/lib/axios";
 
 interface IGetLoginUser {
     accessToken: string
@@ -13,21 +12,38 @@ interface IGetLoginUser {
     image: string
 }
 
-export async function POST(request: Request){
+interface IUserBody {
+    username: string;
+    password: string;
+}
 
-    const {username, password} = await request.json();
+export async function POST(request: NextRequest){
+
+    const { username, password } : IUserBody = await request.json();
 
     try {
-        const {data} = await api.post<IGetLoginUser>("/auth/login", {
-        username: username.trim(),
-        password: password.trim(),
-        expiresInMins: 5
-        },
-        {
-            withCredentials: true
-        });
 
-        (await cookies()).set({
+        const { data } = await api.post<IGetLoginUser>(
+            "/auth/login", 
+            {
+                username: username.trim(),
+                password: password.trim(),
+                expiresInMins: 5
+            },
+            {
+                withCredentials: true
+            }
+        );
+
+        const res = NextResponse.json({
+            success: true,
+            msg: "Usuário autenticado com sucesso!",
+            payload: {
+                user: {...data}
+            }
+        }, {status: 200})
+
+        res.cookies.set({
             name: "token",
             value: data.accessToken,
             httpOnly: true,
@@ -37,15 +53,17 @@ export async function POST(request: Request){
             maxAge: 60 * 5
         })
 
-        return NextResponse.json({msg: "ok", token: data.accessToken}, 
-        {
-            status: 200,
-            headers: {"Content-Type": "application/json"}
-        })
+        return res;
 
-    } catch (e){
+    } catch (error){
 
-        return NextResponse.json({msg: "error"}, {status: 401});
+        const res = NextResponse.json({
+            success: false,
+            msg: "Usuário ou senha inválido!",
+
+        }, {status: 400})
+
+        return res;
     }
 
 }

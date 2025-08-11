@@ -9,17 +9,17 @@ import axios from "axios";
 
 export default function NavBar(){
 
-    const {user} = useUserContext();
+    const {user, setUser} = useUserContext();
 
     const fetchLogout = async () => {
         try {
 
             await axios.post("/api/auth/logout");
-            
+            setUser(null);
             window.location.href = "/login";
 
         } catch(e) {
-            console.log(e)
+            console.error(e)
         }
     }
 

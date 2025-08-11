@@ -20,7 +20,7 @@ type UserData = {
 type UserContextType = {
   user: UserData | null;
   loading: boolean
-  setUser: React.Dispatch<React.SetStateAction<UserData | null>>;
+  setUser: React.Dispatch<React.SetStateAction<UserData | null >>;
   refetch: () => Promise<void>
 };
 
@@ -36,13 +36,23 @@ export const UserProvider = ({children}:PropsProvider) => {
 
           const {data} = await axios.get("/api/auth/user");
 
-          setUser(data.data);
+          const userData = {
+            id: data.payload.user.id,
+            firstName: data.payload.user.firstName,
+            lastName: data.payload.user.lastName,
+            age: data.payload.user.age,
+            gender: data.payload.user.gender,
+            email: data.payload.user.email,
+            image: data.payload.user.image
+          }
 
+          setUser(userData);
+          
         } catch(e) {
-          console.log(e)
-
+          setUser(null);
+          
         } finally {
-          setLoading(false);
+          setLoading(false)
         }
     }
 

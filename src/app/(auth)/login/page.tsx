@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { useUserContext } from "@/context/UserContext";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import LoadingPage from "@/app/components/LoadingPage";
 
 type FormData = {
     username: string;
@@ -14,33 +15,31 @@ type FormData = {
 
 export default function Login(){
 
-    const {register, handleSubmit, formState: {errors}} = useForm<FormData>();
-    
-    const {user, setUser} = useUserContext();
+    const {register, handleSubmit} = useForm<FormData>();
+    const {user, loading} = useUserContext();
     const [loadingLogin, setLoadingLogin] = useState(false);
-    const router = useRouter();
-    const [isClient, setIsClient] = useState(false);
-    const [erro, setErro] = useState("");
+    const [error, setError] = useState("");
 
-    const onSubmitLogin = async (data: FormData) => {
+    const router = useRouter();
+
+    const onSubmitLogin = async (dataForm: FormData) => {
 
         setLoadingLogin(true)
+        setError("")
         
         try {
-            const authUser = await axios({
-                method: 'post',
-                url: '/api/auth/login',
-                data
-            });
+            const { data } = await axios.post(
+                
+                "/api/auth/login", 
+                {...dataForm}
+            );
 
-            setErro("")
-
-            if (authUser.data.token) {
-                window.location.href = "/dashboard";
+            if (data.success && data.payload.user.accessToken){
+                return window.location.href = "/dashboard";
             }
-            
+                        
         } catch(error) {
-            setErro("Usuario ou senha incorreta! Tente novamente")
+            setError("Usuario ou senha incorreta! Tente novamente")
             
         } finally   {
             setLoadingLogin(false);
@@ -50,22 +49,15 @@ export default function Login(){
 
 
     useEffect(()=> {
-
-        setIsClient(true)
-
-        async function getUser(){
+        if(!loading){
             if(user?.id){
-                router.push("/dashboard")
-            } else {
-                setUser(null);
+                router.push("/dashboard");
             }
         }
+    }, [user, loading, router])
 
-        getUser()
-    }, [user])
-
-    if(!isClient){
-        return <p>Aguarde...</p>
+    if(loading){
+        return <LoadingPage>Aguarde uns segundos...</LoadingPage>;
     }
 
     return(
@@ -73,7 +65,7 @@ export default function Login(){
  
             <form onSubmit={handleSubmit(onSubmitLogin)} className={style.form}>
 
-                {erro}
+                {error && <span className={style.errorTop}>{error}</span>}
 
                 <div className={style.boxInput}>
                     <label htmlFor="">Usuário </label>
@@ -88,11 +80,9 @@ export default function Login(){
             </form>
 
             {loadingLogin && (
-                <div className={style.loadingText}>
-                    <img src="/loading-gif.gif" width={50} />
-                    <p>Aguarde um momento</p>
-                </div>
+                <LoadingPage>Autenticando...</LoadingPage>
             )}
+            
         </div>
     );
 }

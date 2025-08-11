@@ -9,8 +9,6 @@ export function middleware(request: NextRequest){
     const accessProtected = routesProtected.some(route => request.nextUrl.pathname.startsWith(route));
 
     const urlRedirect = new URL("/login", request.url);
-
-    const response = NextResponse.next();
     
     const token = request.cookies.get('token')?.value;
 

@@ -33,7 +33,7 @@ export default async function PageProdutos({ params }:Props){
                     {product.id && (
                         <div className={style.myProduct}>
                             <div className={style.image}>
-                                <Image src={product.images[0]} width={200} height={200} alt="" />
+                                <Image src={product.images[0]} width={200} height={200} alt={product.title} />
                             </div>
 
                             <div className={style.details}>
